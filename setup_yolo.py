@@ -2,6 +2,7 @@ from ImageProcess import ImageProcess
 import imutils
 import os
 import progressbar
+from pwn import log
 
 # set the paths for the YOLO weights, cfg file, COCO names file
 def Setup(yolo_path, cv2):
@@ -21,7 +22,7 @@ def detect_and_write(yolo, opname, cap, frameno, create, cv2):
 		# show the progress 
 		total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 		bar = progressbar.ProgressBar(maxval=total_frames, widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
-		print("[+] Starting the proccessing of the video, it may take time depending on the length of the video")
+		log.info("Starting the proccessing of the video, it may take time depending on the length of the video")
 		bar.start()
 		while(True):
 			# get next frame
@@ -48,5 +49,5 @@ def detect_and_write(yolo, opname, cap, frameno, create, cv2):
 				break
 		bar.finish()
 	except KeyboardInterrupt:
-		print('\nInterrupted')
+		log.warn('Interrupted')
 		exit(0)
