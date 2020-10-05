@@ -9,7 +9,6 @@ def Check_distance(a,  b):
         return False
 
 def ImageProcess(image,net,ln,LABELS,cv2):
-    print("procssing a frame")
     #take a single frame of video and then process it for social distancing detection
     (H, W) = (None, None)
     frame = image.copy()

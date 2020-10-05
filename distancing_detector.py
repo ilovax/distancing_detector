@@ -3,8 +3,7 @@ import sys
 from setup_yolo import detect_and_write
 
 
-
-if __name__ == '__main__':
+def main():
 	create = None
 	frameno = 0
 	if len(sys.argv) < 4:
@@ -20,3 +19,6 @@ if __name__ == '__main__':
 	print("Completed!")
 	cap.release()
 	cv2.destroyAllWindows()
+
+if __name__ == '__main__':
+	main()
