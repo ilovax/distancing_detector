@@ -12,10 +12,14 @@ def ImageProcess(image,net,ln,LABELS,cv2):
     #take a single frame of video and then process it for social distancing detection
     (H, W) = (None, None)
     frame = image.copy()
-    if W is None or H is None:
-        (H, W) = frame.shape[:2]
+    # frame dimensions are empty, grab them
+    (H, W) = frame.shape[:2]
+    # construct a blob from the input frame
     blob = cv2.dnn.blobFromImage(frame, 1 / 255.0, (416, 416), swapRB=True, crop=False)
+    # pass of the YOLO object detector
     net.setInput(blob)
+    # perform a forward, giving us our bounding boxes
+    # and associated probabilities
     layerOutputs = net.forward(ln)
     confidences = []
     outline = []
