@@ -1,8 +1,5 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_restful import Resource, Api
-
-from .main import main_bp
-
 
 class Ping(Resource):
     def get(self):
@@ -13,6 +10,9 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     api = Api(app)
     api.add_resource(Ping, '/ping')
-    app.register_blueprint(main_bp, url_prefix='/')
+    @app.route('/', methods=['GET'])
+    def main():
+    	return render_template("main.html")
+    
 
     return app
