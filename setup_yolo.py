@@ -56,7 +56,7 @@ def detect_from_file_and_write(yolo, opname, cap, frameno, create, cv2):
 
 def detect_from_cam_and_write(yolo, opname, cap, frameno, create, cv2):
 	try:
-		log.info("Starting the proccessing of the fames")
+		log.info("Starting the proccessing of the frames")
 		
 		net, ln, labels = Setup(yolo, cv2)
 		
@@ -80,6 +80,41 @@ def detect_from_cam_and_write(yolo, opname, cap, frameno, create, cv2):
 			create.write(Frame)
 			if cv2.waitKey(1) & 0xFF == ord('s'):
 				break
+	except KeyboardInterrupt:
+		log.warn('Interrupted')
+		exit(0)
+
+def detect_from_web_and_write(yolo, opname, cap, frameno, create, cv2):
+	try:
+		# show the progress 
+		total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+		bar = progressbar.ProgressBar(maxval=total_frames, widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
+		log.info("Starting the proccessing of the video, it may take time depending on the length of the video")
+		bar.start()
+		
+		net, ln, labels = Setup(yolo, cv2)
+		
+		while(True):
+			# get next frame
+			ret, frame = cap.read()
+			if not ret:
+				break
+			current_img = frame.copy()
+			current_img = imutils.resize(current_img, width=480)
+			video = current_img.shape
+			frameno += 1
+			bar.update(frameno)
+			if(frameno%2 == 0 or frameno == 1):
+				processedImg = ImageProcess(current_img, net, ln, labels, cv2)
+				Frame = processedImg
+				if create is None:
+					fourcc = cv2.VideoWriter_fourcc(*'XVID')
+					create = cv2.VideoWriter(opname, fourcc, 30, (Frame.shape[1], Frame.shape[0]), True)
+			# write frame to output video
+			create.write(Frame)
+			if cv2.waitKey(1) & 0xFF == ord('s'):
+				break
+		bar.finish()
 	except KeyboardInterrupt:
 		log.warn('Interrupted')
 		exit(0)
