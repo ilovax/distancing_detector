@@ -7,8 +7,8 @@ def main():
 	create = None
 	frameno = 0
 	if len(sys.argv) < 4:
-		log.failure("Usage python distancing_detector.py input_video output_video yolo_path")
-		log.info("use cam instead of input_video for capturing from camera")
+		log.failure("Usage : python distancing_detector.py input_video output_video yolo_path")
+		log.info("Use cam instead of input_video for capturing from camera")
 		exit(0)
 	#inputs	
 	inp = sys.argv[1]
