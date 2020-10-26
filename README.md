@@ -19,9 +19,12 @@ In this project we impliment a social distancing detector based on YOLO model fo
 $ pip install -r requirements.txt 
 ```
 - Download the yolo3 file:
--- https://github.com/tianhai123/yolov3/blob/master/cfg/coco.names
--- https://github.com/tianhai123/yolov3/blob/master/cfg/yolov3.cfg
--- https://pjreddie.com/media/files/yolov3.weights
+
+[coco.names](https://github.com/tianhai123/yolov3/blob/master/cfg/coco.names)
+
+[yolov3.cfg](https://github.com/tianhai123/yolov3/blob/master/cfg/yolov3.cfg)
+
+[yolov3.weights](https://pjreddie.com/media/files/yolov3.weights)
 - Move them to a folder
 ```bash
 $ mkdir yolov3/
